@@ -2,8 +2,10 @@ import { useRef, useContext } from 'react';
 
 import classes from './ProfileForm.module.css';
 import Authcontext from '../../Store/AuthContext';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const ProfileForm = () => {
+  const history = useHistory();
 
   const newPasswordref = useRef()
   const authCtx = useContext(Authcontext);
@@ -14,8 +16,7 @@ const ProfileForm = () => {
     const enteredNewPassword = newPasswordref.current.value;
 
 
-    fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBwPBl7x2krIgwMl4Ty3lOOIsRoWxoYIOI',
-    {
+    fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBwPBl7x2krIgwMl4Ty3lOOIsRoWxoYIOI',    {
       method : 'POST',
       body : JSON.stringify({
         idToken : authCtx.token,
@@ -26,7 +27,7 @@ const ProfileForm = () => {
         'Content-Type' : 'application/json'
       }
     }).then(res => {
-      
+      history.replace('/');
     })
   }
 
